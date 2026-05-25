@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Boston Lighting Collective — Professional Christmas light installation in the Greater Boston area. We supply, hang, and remove. You just enjoy." />
+  <title>Boston Lighting Collective</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0d1b2a;
+      --navy-mid:  #162235;
+      --navy-light:#1e3050;
+      --gold:      #d4a833;
+      --gold-light:#f0c84a;
+      --gold-pale: #fdf3d0;
+      --white:     #ffffff;
+      --text-muted:#8fa8c4;
+      --font: 'Georgia', 'Times New Roman', serif;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER / NAV ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,27,42,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(212,168,51,0.2);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .header-brand svg { width: 36px; height: 36px; flex-shrink: 0; }
+
+    .header-name {
+      font-family: var(--font);
+      font-size: 1rem;
+      color: var(--gold-light);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+
+    .header-name span { display: block; font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .header-cta {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .header-cta:hover { background: var(--gold-light); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.5rem 5rem;
+      overflow: hidden;
+    }
+
+    /* animated twinkle stars */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, #1e3a5f 0%, var(--navy) 65%);
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      opacity: 0;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0; transform: scale(0.6); }
+      50%      { opacity: var(--max-op, 0.8); transform: scale(1); }
+    }
+
+    .hero-logo-wrap {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Boston Skyline SVG logo */
+    .hero-logo-wrap svg {
+      width: min(340px, 90vw);
+      height: auto;
+      filter: drop-shadow(0 0 18px rgba(212,168,51,0.35));
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 560px; }
+
+    .hero h1 {
+      font-family: var(--font);
+      font-size: clamp(2rem, 7vw, 3.4rem);
+      letter-spacing: 0.03em;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold-light);
+    }
+
+    .hero .tagline {
+      font-size: clamp(1rem, 3.5vw, 1.3rem);
+      color: var(--gold-pale);
+      margin: 0.75rem 0 0.5rem;
+      font-style: italic;
+    }
+
+    .hero .location {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 0.9rem 2.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(212,168,51,0.3);
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-block;
+      border: 2px solid rgba(212,168,51,0.5);
+      color: var(--gold-pale);
+      font-size: 0.95rem;
+      padding: 0.7rem 1.8rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    .hero-phone {
+      margin-top: 1rem;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .hero-phone::before { content: "📞 "; font-size: 1rem; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: 860px; margin: 0 auto; }
+
+    .section-label {
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.72rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: var(--font);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      max-width: 520px;
+      font-size: 1rem;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how { background: var(--navy-mid); }
+
+    .steps {
+      display: grid;
+      gap: 2rem;
+      margin-top: 3rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 640px) {
+      .steps { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .step {
+      background: var(--navy-light);
+      border: 1px solid rgba(212,168,51,0.15);
+      border-radius: 10px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .step:hover { border-color: rgba(212,168,51,0.5); }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .step-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+
+    .step h3 {
+      font-family: var(--font);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--gold-light);
+    }
+
+    .step p { color: var(--text-muted); font-size: 0.92rem; }
+
+    /* ── WHY US ── */
+    #why { background: var(--navy); }
+
+    .why-grid {
+      display: grid;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 560px) {
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .why-card {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: var(--navy-mid);
+      border: 1px solid rgba(212,168,51,0.12);
+      border-radius: 8px;
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .why-card:hover { border-color: rgba(212,168,51,0.4); }
+
+    .why-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .why-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: var(--gold-pale);
+    }
+
+    .why-card p { font-size: 0.88rem; color: var(--text-muted); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy-mid); }
+
+    .contact-wrap {
+      display: grid;
+      gap: 3rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (min-width: 700px) {
+      .contact-wrap { grid-template-columns: 1fr 1fr; }
+    }
+
+    .contact-info h3 {
+      font-family: var(--font);
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .contact-detail-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--navy-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      border: 1px solid rgba(212,168,51,0.2);
+    }
+
+    .contact-detail-text strong { display: block; color: var(--gold-light); font-size: 1rem; }
+    .contact-detail-text span { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* FORM */
+    .contact-form { display: flex; flex-direction: column; gap: 0.9rem; }
+
+    .form-row { display: grid; gap: 0.9rem; grid-template-columns: 1fr; }
+    @media (min-width: 420px) {
+      .form-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    .field { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; }
+
+    input, textarea, select {
+      background: var(--navy-light);
+      border: 1px solid rgba(212,168,51,0.25);
+      border-radius: 5px;
+      color: var(--white);
+      font-size: 0.95rem;
+      font-family: var(--sans);
+      padding: 0.65rem 0.9rem;
+      transition: border-color 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(143,168,196,0.5); }
+    input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+    select option { background: var(--navy-light); }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    .sms-opt-in {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .sms-opt-in input[type="checkbox"] {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      padding: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .fs-success-msg {
+      background: rgba(45,106,79,0.2);
+      border: 1px solid #2d6a4f;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      color: #74c69d;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .fs-error-msg {
+      background: rgba(180,40,40,0.15);
+      border: 1px solid rgba(220,60,60,0.4);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      color: #f08080;
+      font-size: 0.88rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .fs-field-error {
+      color: #f08080;
+      font-size: 0.78rem;
+      margin-top: 0.2rem;
+      display: block;
+      min-height: 1em;
+    }
+
+    input[aria-invalid="true"],
+    textarea[aria-invalid="true"],
+    select[aria-invalid="true"] {
+      border-color: rgba(220,60,60,0.6);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080f18;
+      border-top: 1px solid rgba(212,168,51,0.12);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .footer-inner { max-width: 660px; margin: 0 auto; }
+
+    .footer-logo {
+      font-family: var(--font);
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold-light); }
+
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: rgba(143,168,196,0.55);
+      line-height: 1.6;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(143,168,196,0.35);
+      margin-top: 0.75rem;
+    }
+
+    /* ── DIVIDER LIGHTS ── */
+    .lights-divider {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      overflow: hidden;
+      height: 28px;
+      position: relative;
+    }
+    .lights-divider svg {
+      width: 100%;
+      height: 28px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     STICKY HEADER
+════════════════════════════════════ -->
+<header>
+  <a href="#hero" class="header-brand" aria-label="Boston Lighting Collective home">
+    <!-- Mini skyline mark -->
+    <svg viewBox="0 0 64 44" fill="none" aria-hidden="true">
+      <!-- string -->
+      <path d="M2 6 Q16 14 32 6 Q48 -2 62 6" stroke="#d4a833" stroke-width="1.5" fill="none"/>
+      <!-- bulbs -->
+      <ellipse cx="12" cy="12" rx="3" ry="4" fill="#f0c84a" opacity="0.9"/>
+      <ellipse cx="24" cy="8"  rx="3" ry="4" fill="#f0c84a" opacity="0.9"/>
+      <ellipse cx="36" cy="8"  rx="3" ry="4" fill="#f0c84a" opacity="0.9"/>
+      <ellipse cx="48" cy="11" rx="3" ry="4" fill="#f0c84a" opacity="0.9"/>
+      <!-- skyline silhouette -->
+      <rect x="2"  y="26" width="6"  height="18" fill="#1e3050"/>
+      <rect x="9"  y="20" width="5"  height="24" fill="#1e3050"/>
+      <rect x="15" y="28" width="4"  height="16" fill="#1e3050"/>
+      <rect x="20" y="18" width="7"  height="26" fill="#1e3050"/>
+      <polygon points="20,18 23.5,12 27,18" fill="#1e3050"/>
+      <rect x="28" y="24" width="5"  height="20" fill="#1e3050"/>
+      <rect x="34" y="30" width="4"  height="14" fill="#1e3050"/>
+      <rect x="39" y="22" width="6"  height="22" fill="#1e3050"/>
+      <rect x="46" y="28" width="5"  height="16" fill="#1e3050"/>
+      <rect x="52" y="24" width="5"  height="20" fill="#1e3050"/>
+      <rect x="58" y="30" width="4"  height="14" fill="#1e3050"/>
+    </svg>
+    <span class="header-name">Boston Lighting Collective <span>Greater Boston</span></span>
+  </a>
+  <a href="#contact" class="header-cta">Get a Quote</a>
+</header>
+
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <!-- Stars generated inline for zero-dependency approach -->
+    <div class="star" style="width:2px;height:2px;top:8%;left:12%;--dur:2.8s;--delay:0s;--max-op:0.9"></div>
+    <div class="star" style="width:3px;height:3px;top:5%;left:30%;--dur:3.5s;--delay:0.4s;--max-op:0.7"></div>
+    <div class="star" style="width:2px;height:2px;top:12%;left:50%;--dur:2.2s;--delay:1s;--max-op:0.8"></div>
+    <div class="star" style="width:2px;height:2px;top:7%;left:70%;--dur:4s;--delay:0.2s;--max-op:0.6"></div>
+    <div class="star" style="width:3px;height:3px;top:15%;left:88%;--dur:3s;--delay:1.5s;--max-op:0.9"></div>
+    <div class="star" style="width:2px;height:2px;top:20%;left:22%;--dur:2.6s;--delay:0.8s;--max-op:0.7"></div>
+    <div class="star" style="width:2px;height:2px;top:3%;left:42%;--dur:3.8s;--delay:0.3s;--max-op:0.8"></div>
+    <div class="star" style="width:1px;height:1px;top:9%;left:60%;--dur:2s;--delay:1.2s;--max-op:1"></div>
+    <div class="star" style="width:2px;height:2px;top:18%;left:78%;--dur:3.2s;--delay:0.6s;--max-op:0.6"></div>
+    <div class="star" style="width:3px;height:3px;top:6%;left:95%;--dur:4.5s;--delay:2s;--max-op:0.7"></div>
+    <div class="star" style="width:2px;height:2px;top:25%;left:5%;--dur:2.4s;--delay:1.8s;--max-op:0.8"></div>
+    <div class="star" style="width:1px;height:1px;top:22%;left:55%;--dur:3s;--delay:0.9s;--max-op:0.9"></div>
+  </div>
+
+  <!-- Boston Skyline + String Lights SVG -->
+  <div class="hero-logo-wrap" aria-label="Boston skyline with string lights">
+    <svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#f0c84a" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#f0c84a" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="bulb-glow" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ── String wire across top ── -->
+      <!-- Main catenary from pole to pole (approx) -->
+      <path d="M0,18 C45,36 90,24 135,30 C180,36 225,20 270,28 C315,36 340,22 360,18"
+            stroke="#8fa8c4" stroke-width="1.2" fill="none" opacity="0.7"/>
+
+      <!-- ── Light bulbs on the string ── -->
+      <!-- Drop lines + bulbs at regular intervals -->
+      <g filter="url(#bulb-glow)">
+        <!-- bulb 1 -->
+        <line x1="25"  y1="22" x2="25"  y2="32" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="25"  cy="36" rx="4" ry="5.5" fill="#f0c84a"/>
+        <rect x="23" y="30" width="4" height="3" fill="#c8a030" rx="0.5"/>
+
+        <!-- bulb 2 -->
+        <line x1="60"  y1="28" x2="60"  y2="38" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="60"  cy="42" rx="4" ry="5.5" fill="#ffd84a"/>
+        <rect x="58" y="36" width="4" height="3" fill="#c8a030" rx="0.5"/>
+
+        <!-- bulb 3 -->
+        <line x1="95"  y1="25" x2="95"  y2="35" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="95"  cy="39" rx="4" ry="5.5" fill="#f0c84a"/>
+        <rect x="93" y="33" width="4" height="3" fill="#c8a030" rx="0.5"/>
+
+        <!-- bulb 4 -->
+        <line x1="130" y1="30" x2="130" y2="40" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="130" cy="44" rx="4" ry="5.5" fill="#ffe066"/>
+        <rect x="128" y="38" width="4" height="3" fill="#c8a030" rx="0.5"/>
+
+        <!-- bulb 5 (center) -->
+        <line x1="180" y1="34" x2="180" y2="46" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="180" cy="51" rx="5" ry="6.5" fill="#ffd84a"/>
+        <rect x="178" y="44" width="4" height="3.5" fill="#c8a030" rx="0.5"/>
+        <ellipse cx="180" cy="51" rx="9" ry="9" fill="url(#glow)"/>
+
+        <!-- bulb 6 -->
+        <line x1="225" y1="22" x2="225" y2="32" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="225" cy="36" rx="4" ry="5.5" fill="#f0c84a"/>
+        <rect x="223" y="30" width="4" height="3" fill="#c8a030" rx="0.5"/>
+
+        <!-- bulb 7 -->
+        <line x1="260" y1="28" x2="260" y2="38" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="260" cy="42" rx="4" ry="5.5" fill="#ffd84a"/>
+        <rect x="258" y="36" width="4" height="3" fill="#c8a030" rx="0.5"/>
+
+        <!-- bulb 8 -->
+        <line x1="300" y1="24" x2="300" y2="34" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="300" cy="38" rx="4" ry="5.5" fill="#ffe066"/>
+        <rect x="298" y="32" width="4" height="3" fill="#c8a030" rx="0.5"/>
+
+        <!-- bulb 9 -->
+        <line x1="338" y1="20" x2="338" y2="30" stroke="#8fa8c4" stroke-width="0.8"/>
+        <ellipse cx="338" cy="34" rx="4" ry="5.5" fill="#f0c84a"/>
+        <rect x="336" y="28" width="4" height="3" fill="#c8a030" rx="0.5"/>
+      </g>
+
+      <!-- ── Boston Skyline Silhouette ── -->
+      <!-- buildings are drawn left to right, filled navy-light, sitting at bottom -->
+      <g fill="#1e3050">
+        <!-- far left low block -->
+        <rect x="0"   y="130" width="18" height="30"/>
+        <!-- taller -->
+        <rect x="18"  y="108" width="14" height="52"/>
+        <!-- antenna on it -->
+        <rect x="24"  y="98"  width="2"  height="10"/>
+        <!-- short -->
+        <rect x="32"  y="122" width="12" height="38"/>
+        <!-- medium -->
+        <rect x="44"  y="112" width="16" height="48"/>
+        <!-- stepped tower (Prudential-ish) -->
+        <rect x="60"  y="90"  width="18" height="70"/>
+        <rect x="63"  y="82"  width="12" height="10"/>
+        <rect x="66"  y="68"  width="6"  height="16"/>
+        <rect x="68"  y="60"  width="2"  height="10"/><!-- spire -->
+        <!-- short beside -->
+        <rect x="78"  y="118" width="12" height="42"/>
+        <!-- medium cluster -->
+        <rect x="90"  y="106" width="14" height="54"/>
+        <rect x="104" y="114" width="10" height="46"/>
+        <!-- tall center-left (John Hancock-ish) -->
+        <rect x="114" y="80"  width="20" height="80"/>
+        <rect x="116" y="72"  width="16" height="10"/>
+        <rect x="120" y="62"  width="8"  height="12"/>
+        <!-- notch cutouts for Hancock profile -->
+        <polygon points="114,100 118,96 114,92" fill="#162235"/>
+        <polygon points="134,100 130,96 134,92" fill="#162235"/>
+        <!-- medium -->
+        <rect x="134" y="100" width="14" height="60"/>
+        <!-- low -->
+        <rect x="148" y="120" width="10" height="40"/>
+        <!-- center open plaza gap -->
+        <rect x="158" y="128" width="8"  height="32"/>
+        <!-- Old State House area (center-right) -->
+        <rect x="166" y="110" width="16" height="50"/>
+        <polygon points="166,110 174,98 182,110" fill="#1e3050"/>
+        <!-- short -->
+        <rect x="182" y="122" width="12" height="38"/>
+        <!-- step up -->
+        <rect x="194" y="104" width="16" height="56"/>
+        <!-- tall right cluster -->
+        <rect x="210" y="88"  width="20" height="72"/>
+        <rect x="213" y="80"  width="14" height="10"/>
+        <rect x="217" y="68"  width="6"  height="14"/>
+        <rect x="219" y="60"  width="2"  height="10"/>
+        <!-- medium -->
+        <rect x="230" y="110" width="14" height="50"/>
+        <rect x="244" y="118" width="12" height="42"/>
+        <!-- waterfront lower -->
+        <rect x="256" y="124" width="14" height="36"/>
+        <rect x="270" y="116" width="16" height="44"/>
+        <!-- short blocks -->
+        <rect x="286" y="128" width="10" height="32"/>
+        <rect x="296" y="120" width="14" height="40"/>
+        <!-- right edge -->
+        <rect x="310" y="110" width="16" height="50"/>
+        <rect x="326" y="126" width="12" height="34"/>
+        <rect x="338" y="118" width="12" height="42"/>
+        <rect x="350" y="130" width="10" height="30"/>
+      </g>
+
+      <!-- ground fill to bottom -->
+      <rect x="0" y="155" width="360" height="5" fill="#1e3050"/>
+
+      <!-- subtle glow beneath lights -->
+      <ellipse cx="180" cy="58" rx="160" ry="12" fill="#d4a833" opacity="0.06"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <h1><em>Boston Lighting</em> Collective</h1>
+    <p class="tagline">"We hang it. You enjoy it."</p>
+    <p class="location">Greater Boston Area</p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get Your Free Quote</a>
+      <a href="tel:+18887110820" class="hero-phone">(888) 711-0820</a>
+      <a href="#how" class="btn-secondary">See How It Works ↓</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════
+     STRING LIGHTS DIVIDER
+════════════════════════════════════ -->
+<div class="lights-divider" aria-hidden="true">
+  <svg viewBox="0 0 360 28" preserveAspectRatio="none">
+    <path d="M0,8 C60,20 120,4 180,14 C240,24 300,6 360,12" stroke="#d4a833" stroke-width="1" fill="none" opacity="0.4"/>
+    <ellipse cx="40"  cy="17" rx="3" ry="4" fill="#f0c84a" opacity="0.7"/>
+    <ellipse cx="100" cy="9"  rx="3" ry="4" fill="#ffd84a" opacity="0.7"/>
+    <ellipse cx="160" cy="19" rx="3" ry="4" fill="#f0c84a" opacity="0.7"/>
+    <ellipse cx="220" cy="23" rx="3" ry="4" fill="#ffe066" opacity="0.7"/>
+    <ellipse cx="280" cy="11" rx="3" ry="4" fill="#f0c84a" opacity="0.7"/>
+    <ellipse cx="340" cy="16" rx="3" ry="4" fill="#ffd84a" opacity="0.7"/>
+  </svg>
+</div>
+
+
+<!-- ════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════ -->
+<section id="how">
+  <div class="section-inner">
+    <p class="section-label">The Process</p>
+    <h2 class="section-title">Simple as 1 – 2 – 3</h2>
+    <p class="section-sub">No hassle, no ladders, no storage bins. We handle every step from first call to final takedown.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <span class="step-icon">📋</span>
+        <h3>We Assess</h3>
+        <p>We visit your home or business, measure the space, and design a custom lighting plan that fits your style and budget — completely free.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <span class="step-icon">✨</span>
+        <h3>We Hang</h3>
+        <p>Our crew arrives with all the lights, hardware, and equipment. We install everything safely and beautifully — you don't lift a finger.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <span class="step-icon">📦</span>
+        <h3>We Remove</h3>
+        <p>After the season, we come back, take everything down, and haul it away. Zero storage. Zero mess. You're done until next year.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════
+     WHY US
+════════════════════════════════════ -->
+<section id="why">
+  <div class="section-inner">
+    <p class="section-label">Why Choose Us</p>
+    <h2 class="section-title">The Full-Service Difference</h2>
+    <p class="section-sub">We're not just installers. We're your complete holiday lighting solution — start to finish.</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">💡</span>
+        <div>
+          <h4>We Supply Everything</h4>
+          <p>Commercial-grade LED lights, clips, timers, and extension cords — all included. You buy nothing.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🏠</span>
+        <div>
+          <h4>No Storage Headaches</h4>
+          <p>When the season ends, we take it all away. No tangled lights stuffed in your attic.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🦺</span>
+        <div>
+          <h4>Safe, Professional Install</h4>
+          <p>Fully insured crew with professional-grade equipment. No DIY risks on icy rooflines.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🗺️</span>
+        <div>
+          <h4>Locally Rooted in Boston</h4>
+          <p>We live and work here. Our crews know Greater Boston neighborhoods and respond fast.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🔁</span>
+        <div>
+          <h4>Annual Plan — Lock In Your Spot</h4>
+          <p>Sign up for the season and we'll automatically schedule you each year at your preferred price.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">⭐</span>
+        <div>
+          <h4>Satisfaction Guaranteed</h4>
+          <p>If a bulb burns out mid-season, we come fix it. No extra charge. That's the promise.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════
+     STRING LIGHTS DIVIDER
+════════════════════════════════════ -->
+<div class="lights-divider" aria-hidden="true">
+  <svg viewBox="0 0 360 28" preserveAspectRatio="none">
+    <path d="M0,14 C60,6 120,22 180,10 C240,2 300,18 360,8" stroke="#d4a833" stroke-width="1" fill="none" opacity="0.4"/>
+    <ellipse cx="30"  cy="9"  rx="3" ry="4" fill="#f0c84a" opacity="0.7"/>
+    <ellipse cx="90"  cy="20" rx="3" ry="4" fill="#ffd84a" opacity="0.7"/>
+    <ellipse cx="150" cy="7"  rx="3" ry="4" fill="#f0c84a" opacity="0.7"/>
+    <ellipse cx="210" cy="5"  rx="3" ry="4" fill="#ffe066" opacity="0.7"/>
+    <ellipse cx="270" cy="16" rx="3" ry="4" fill="#f0c84a" opacity="0.7"/>
+    <ellipse cx="330" cy="10" rx="3" ry="4" fill="#ffd84a" opacity="0.7"/>
+  </svg>
+</div>
+
+
+<!-- ════════════════════════════════════
+     CONTACT / CTA
+════════════════════════════════════ -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Ready to Light Up Your Home?</p>
+    <h2 class="section-title">Get Your Free Quote</h2>
+    <p class="section-sub">No obligations. Most quotes are turned around within one business day.</p>
+
+    <div class="contact-wrap">
+
+      <!-- Left: contact info -->
+      <div class="contact-info">
+        <h3>Reach Us Directly</h3>
+
+        <a href="tel:+18887110820" class="contact-detail">
+          <span class="contact-detail-icon">📞</span>
+          <span class="contact-detail-text">
+            <strong>(888) 711-0820</strong>
+            <span>Mon–Sat, 8am–7pm</span>
+          </span>
+        </a>
+
+        <a href="sms:+18887110820" class="contact-detail">
+          <span class="contact-detail-icon">💬</span>
+          <span class="contact-detail-text">
+            <strong>Text Us</strong>
+            <span>(888) 711-0820</span>
+          </span>
+        </a>
+
+        <a href="https://www.instagram.com/bostonlightingcollective" target="_blank" rel="noopener" class="contact-detail">
+          <span class="contact-detail-icon">📸</span>
+          <span class="contact-detail-text">
+            <strong>@bostonlightingcollective</strong>
+            <span>See our recent installs</span>
+          </span>
+        </a>
+
+        <div class="contact-detail" style="cursor:default;">
+          <span class="contact-detail-icon">📍</span>
+          <span class="contact-detail-text">
+            <strong>Greater Boston Area</strong>
+            <span>Boston, Brookline, Newton, Wellesley, Arlington, Lexington &amp; more</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Right: quote form -->
+      <div data-fs-success style="display:none;" class="fs-success-msg">
+        ✅ Quote request received! We'll be in touch within one business day.
+      </div>
+      <div data-fs-error style="display:none;" class="fs-error-msg"></div>
+
+      <form class="contact-form" id="quoteForm">
+        <div class="form-row">
+          <div class="field">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" placeholder="Jane" required autocomplete="given-name" data-fs-field/>
+            <span class="fs-field-error" data-fs-error="fname"></span>
+          </div>
+          <div class="field">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" placeholder="Smith" required autocomplete="family-name" data-fs-field/>
+            <span class="fs-field-error" data-fs-error="lname"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="jane@email.com" required autocomplete="email" data-fs-field/>
+          <span class="fs-field-error" data-fs-error="email"></span>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(617) 555-0100" autocomplete="tel" data-fs-field/>
+          <span class="fs-field-error" data-fs-error="phone"></span>
+        </div>
+
+        <div class="field">
+          <label for="address">Property Address</label>
+          <input type="text" id="address" name="address" placeholder="123 Main St, Boston, MA" autocomplete="street-address" data-fs-field/>
+        </div>
+
+        <div class="field">
+          <label for="type">Property Type</label>
+          <select id="type" name="type" data-fs-field>
+            <option value="">Select one…</option>
+            <option value="residential">Residential Home</option>
+            <option value="condo">Condo / Townhouse</option>
+            <option value="commercial">Commercial Property</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message">Anything else we should know?</label>
+          <textarea id="message" name="message" placeholder="Roofline footage, special requests, timeline…" data-fs-field></textarea>
+          <span class="fs-field-error" data-fs-error="message"></span>
+        </div>
+
+        <label class="sms-opt-in">
+          <input type="checkbox" name="smsOptIn" id="smsOptIn"/>
+          <span>By checking this box, I agree to receive SMS messages from Boston Lighting Collective regarding my quote, scheduling, and seasonal updates. Message frequency varies. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to cancel, <strong>HELP</strong> for help. This consent is not required as a condition of purchase. View our <a href="privacy-policy.html" target="_blank" style="color:var(--gold-light);">Privacy Policy</a>.</span>
+        </label>
+
+        <button type="submit" class="btn-submit" data-fs-submit-btn>Send My Quote Request →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Boston Lighting Collective</div>
+
+    <div class="footer-links">
+      <a href="#hero">Home</a>
+      <a href="#how">How It Works</a>
+      <a href="#why">Why Us</a>
+      <a href="#contact">Get a Quote</a>
+      <a href="tel:+18887110820">(888) 711-0820</a>
+      <a href="https://www.instagram.com/bostonlightingcollective" target="_blank" rel="noopener">Instagram</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
+
+    <div class="footer-disclaimer">
+      <strong>SMS Disclosure:</strong> Boston Lighting Collective uses SMS messaging to send quotes, scheduling confirmations, and seasonal updates to customers who have opted in. Message frequency varies. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to cancel at any time. Reply <strong>HELP</strong> for assistance. Carriers are not liable for delayed or undelivered messages. This consent is not a condition of purchase. View our <a href="privacy-policy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a>.
+      <br/><br/>
+      Boston Lighting Collective is fully insured and licensed in the Commonwealth of Massachusetts. Serving the Greater Boston area including Boston, Brookline, Newton, Wellesley, Arlington, Lexington, Waltham, Needham, Dedham, and surrounding communities.
+    </div>
+
+    <div class="footer-copy">
+      &copy; <span id="yr"></span> Boston Lighting Collective. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#quoteForm', formId: 'xojbkdjl' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>
