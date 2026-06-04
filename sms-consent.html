@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SMS Consent & Opt-In — Boston Lighting Collective" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <title>Text Message Consent — Boston Lighting Collective</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0d1b2a;
+      --navy-mid:  #162235;
+      --navy-light:#1e3050;
+      --gold:      #d4a833;
+      --gold-light:#f0c84a;
+      --gold-pale: #fdf3d0;
+      --white:     #ffffff;
+      --text-muted:#8fa8c4;
+      --font: 'Georgia', 'Times New Roman', serif;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,27,42,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(212,168,51,0.2);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .header-brand svg { width: 36px; height: 36px; flex-shrink: 0; }
+
+    .header-name {
+      font-family: var(--font);
+      font-size: 1rem;
+      color: var(--gold-light);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+
+    .header-name span {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-cta {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .header-cta:hover { background: var(--gold-light); }
+
+    /* ── PAGE BODY ── */
+    .page-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .page-label {
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.72rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .page-title {
+      font-family: var(--font);
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-lead {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+      max-width: 540px;
+    }
+
+    /* ── SECTIONS ── */
+    .consent-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-heading {
+      font-family: var(--font);
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(212,168,51,0.2);
+      margin-bottom: 1.1rem;
+    }
+
+    /* ── CHECKBOXES ── */
+    .opt-card {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: var(--navy-mid);
+      border: 1px solid rgba(212,168,51,0.15);
+      border-left: 4px solid var(--gold);
+      border-radius: 6px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .opt-card:hover { border-color: rgba(212,168,51,0.5); border-left-color: var(--gold-light); }
+
+    .opt-card input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .opt-label { font-size: 0.92rem; }
+    .opt-label strong { display: block; color: var(--white); margin-bottom: 0.2rem; font-size: 0.95rem; }
+    .opt-label span { color: var(--text-muted); font-size: 0.87rem; }
+
+    /* ── DISCLOSURE BOX ── */
+    .disclosure {
+      background: var(--navy-light);
+      border: 1px dashed rgba(212,168,51,0.3);
+      border-radius: 6px;
+      padding: 1.1rem 1.25rem;
+      font-size: 0.87rem;
+      color: var(--text-muted);
+    }
+
+    .disclosure ul {
+      padding-left: 1.2rem;
+      margin-top: 0.4rem;
+    }
+
+    .disclosure li { margin-bottom: 0.55rem; }
+
+    .kw {
+      background: var(--navy);
+      color: var(--gold-light);
+      border: 1px solid rgba(212,168,51,0.3);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .disclosure a { color: var(--gold-light); }
+
+    .not-required {
+      background: var(--navy-mid);
+      border: 1px solid rgba(212,168,51,0.15);
+      border-radius: 6px;
+      padding: 0.9rem 1.25rem;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .not-required strong { color: var(--white); }
+
+    /* ── FIELDS ── */
+    .fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 520px) {
+      .fields-grid { grid-template-columns: 1fr; }
+    }
+
+    .field { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .field label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .field input {
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(143,168,196,0.4);
+      color: var(--white);
+      font-size: 0.95rem;
+      font-family: var(--sans);
+      padding: 0.5rem 0.2rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .field input::placeholder { color: rgba(143,168,196,0.35); }
+    .field input:focus { border-color: var(--gold); }
+
+    .sig-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 520px) {
+      .sig-row { grid-template-columns: 1fr; }
+    }
+
+    .sig-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+
+    /* ── SUBMIT ── */
+    .btn-submit {
+      display: block;
+      width: 100%;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      padding: 0.9rem;
+      cursor: pointer;
+      margin-top: 1.75rem;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .fs-success-msg {
+      background: rgba(45,106,79,0.2);
+      border: 1px solid #2d6a4f;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      color: #74c69d;
+      font-size: 1rem;
+      text-align: center;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080f18;
+      border-top: 1px solid rgba(212,168,51,0.12);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .footer-inner { max-width: 660px; margin: 0 auto; }
+
+    .footer-logo {
+      font-family: var(--font);
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold-light); }
+
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: rgba(143,168,196,0.55);
+      line-height: 1.6;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(143,168,196,0.35);
+      margin-top: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <a href="index.html" class="header-brand" aria-label="Boston Lighting Collective home">
+    <svg viewBox="0 0 64 44" fill="none" aria-hidden="true">
+      <path d="M2 6 Q16 14 32 6 Q48 -2 62 6" stroke="#d4a833" stroke-width="1.5" fill="none"/>
+      <ellipse cx="12" cy="12" rx="3" ry="4" fill="#f0c84a" opacity="0.9"/>
+      <ellipse cx="24" cy="8"  rx="3" ry="4" fill="#f0c84a" opacity="0.9"/>
+      <ellipse cx="36" cy="8"  rx="3" ry="4" fill="#f0c84a" opacity="0.9"/>
+      <ellipse cx="48" cy="11" rx="3" ry="4" fill="#f0c84a" opacity="0.9"/>
+      <rect x="2"  y="26" width="6"  height="18" fill="#1e3050"/>
+      <rect x="9"  y="20" width="5"  height="24" fill="#1e3050"/>
+      <rect x="15" y="28" width="4"  height="16" fill="#1e3050"/>
+      <rect x="20" y="18" width="7"  height="26" fill="#1e3050"/>
+      <polygon points="20,18 23.5,12 27,18" fill="#1e3050"/>
+      <rect x="28" y="24" width="5"  height="20" fill="#1e3050"/>
+      <rect x="34" y="30" width="4"  height="14" fill="#1e3050"/>
+      <rect x="39" y="22" width="6"  height="22" fill="#1e3050"/>
+      <rect x="46" y="28" width="5"  height="16" fill="#1e3050"/>
+      <rect x="52" y="24" width="5"  height="20" fill="#1e3050"/>
+      <rect x="58" y="30" width="4"  height="14" fill="#1e3050"/>
+    </svg>
+    <span class="header-name">Boston Lighting Collective <span>Greater Boston</span></span>
+  </a>
+  <a href="index.html#contact" class="header-cta">Get a Quote</a>
+</header>
+
+
+<!-- ── PAGE CONTENT ── -->
+<div class="page-wrap">
+
+  <p class="page-label">Messaging Preferences</p>
+  <h1 class="page-title">Text Message Consent &amp; Opt-In</h1>
+  <p class="page-lead">By completing this form you give Boston Lighting Collective permission to contact you by SMS/MMS at the mobile number you provide. Your consent is voluntary and you can withdraw it at any time by replying STOP.</p>
+
+  <form id="consentForm">
+
+    <!-- CHECKBOXES -->
+    <div class="consent-section">
+      <h2 class="section-heading">What you'd like to receive</h2>
+      <p style="font-size:0.87rem;color:var(--text-muted);margin-bottom:1rem;">Each option is independent — check one or both.</p>
+
+      <label class="opt-card">
+        <input type="checkbox" name="service" />
+        <span class="opt-label">
+          <strong>Service &amp; scheduling messages</strong>
+          <span>Quotes and estimates, appointment confirmations, install and takedown scheduling, crew arrival updates, and billing or service reminders related to your job.</span>
+        </span>
+      </label>
+
+      <label class="opt-card">
+        <input type="checkbox" name="promo" />
+        <span class="opt-label">
+          <strong>Promotional &amp; seasonal messages</strong>
+          <span>Early-booking discounts, seasonal offers, referral perks, and new service announcements from Boston Lighting Collective.</span>
+        </span>
+      </label>
+    </div>
+
+    <!-- DISCLOSURE -->
+    <div class="consent-section">
+      <h2 class="section-heading">Message terms</h2>
+      <div class="disclosure">
+        <ul>
+          <li><strong style="color:var(--white);">Message frequency varies</strong> based on your project and the options you select above.</li>
+          <li><strong style="color:var(--white);">Message and data rates may apply.</strong> Standard carrier charges apply per your mobile plan.</li>
+          <li>Reply <span class="kw">STOP</span> at any time to unsubscribe and stop all messages. Reply <span class="kw">HELP</span> for help or call us at <a href="tel:+18887110820">(888) 711-0820</a>.</li>
+          <li>Carriers are not liable for delayed or undelivered messages.</li>
+          <li>We do not sell or share your number with third parties for their own marketing. See our <a href="privacy-policy.html">Privacy Policy</a> for full details on how we protect your information.</li>
+        </ul>
+      </div>
+      <div class="not-required">
+        <strong>Consent is not a condition of purchase.</strong> You do not have to agree to receive text messages in order to hire Boston Lighting Collective or receive any service from us.
+      </div>
+    </div>
+
+    <!-- FIELDS -->
+    <div class="consent-section">
+      <h2 class="section-heading">Your information &amp; signature</h2>
+
+      <div class="fields-grid">
+        <div class="field">
+          <label for="fullname">Full Name</label>
+          <input type="text" id="fullname" name="fullname" placeholder="Jane Smith" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="mobile">Mobile Number</label>
+          <input type="tel" id="mobile" name="mobile" placeholder="(617) 555-0100" required autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="sig-row">
+        <div class="field">
+          <label for="signature">Signature</label>
+          <input type="text" id="signature" name="signature" placeholder="Type your full name to sign" required />
+        </div>
+        <div class="field">
+          <label for="date">Date</label>
+          <input type="text" id="date" name="date" placeholder="MM / DD / YYYY" required />
+        </div>
+      </div>
+
+      <p class="sig-note">By signing, I confirm the mobile number above is mine, I am authorized to opt it in, and I have read and agree to the terms on this page.</p>
+    </div>
+
+    <div id="successMsg" class="fs-success-msg">
+      ✅ Thank you — your consent has been recorded. You can reply STOP at any time to opt out.
+    </div>
+
+    <button type="submit" class="btn-submit" id="submitBtn">Submit Consent →</button>
+
+  </form>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Boston Lighting Collective</div>
+
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#how">How It Works</a>
+      <a href="index.html#why">Why Us</a>
+      <a href="index.html#contact">Get a Quote</a>
+      <a href="tel:+18887110820">(888) 711-0820</a>
+      <a href="https://www.instagram.com/bostonlightingcollective" target="_blank" rel="noopener">Instagram</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="sms-consent.html">Text Message Consent</a>
+    </div>
+
+    <div class="footer-disclaimer">
+      <strong>SMS Disclosure:</strong> Boston Lighting Collective uses SMS messaging to send quotes, scheduling confirmations, and seasonal updates to customers who have opted in. Message frequency varies. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to cancel at any time. Reply <strong>HELP</strong> for assistance or contact us at <a href="tel:+18887110820" style="color:inherit;">(888) 711-0820</a> or <a href="mailto:business@bostonlightingcollective.com" style="color:inherit;">business@bostonlightingcollective.com</a>. Carriers are not liable for delayed or undelivered messages. This consent is not a condition of purchase. View our <a href="privacy-policy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a>.
+      <br/><br/>
+      Boston Lighting Collective is fully insured and licensed in the Commonwealth of Massachusetts. Serving the Greater Boston area including Boston, Brookline, Newton, Wellesley, Arlington, Lexington, Waltham, Needham, Dedham, and surrounding communities.
+    </div>
+
+    <div class="footer-copy">
+      &copy; <span id="yr"></span> Boston Lighting Collective. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  document.getElementById('date').addEventListener('focus', function () {
+    if (!this.value) {
+      const now = new Date();
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const dd = String(now.getDate()).padStart(2, '0');
+      const yyyy = now.getFullYear();
+      this.value = `${mm} / ${dd} / ${yyyy}`;
+    }
+  });
+
+  document.getElementById('consentForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('successMsg');
+    btn.disabled = true;
+    btn.textContent = 'Submitted';
+    msg.style.display = 'block';
+    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // TODO: wire to Formspree or your backend if you want submissions stored
+  });
+</script>
+
+</body>
+</html>
